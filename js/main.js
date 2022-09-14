@@ -1,20 +1,10 @@
-// First off, preventing default behavior of the submit button.
-var submitForm = document.querySelector('.formClass');
-submitForm.onsubmit = function (e) {
-  e.preventDefault();
-};
-// defining nessessary elements to listen to or change.
-var submitButton = document.querySelector('.submit-button');
-var photoUrl = document.querySelector('.photoUrl');
+// Change the image src to value of photoUrl
 var photoImg = document.querySelector('.imageInput');
-// Function for listening to input on the PhotoUrl, possibly ask on how to add regex for input.
+var photoUrl = document.querySelector('[name="photoUrl"]');
+// Function for listening to input on the PhotoUrl, possibly ask on how to add regex for input. Need to find what part of the object to set to the new src.
 function urlInput(e) {
-  if (photoUrl.textContent !== null && undefined) {
-    photoImg.src = photoUrl.textContent;
+  if (photoUrl.value !== undefined) {
+    photoImg.src = photoUrl.value;
   }
 }
 photoUrl.addEventListener('input', urlInput);
-// function for listening submit
-function handleSubmit(e) {
-}
-submitButton.addEventListener('click', handleSubmit);
