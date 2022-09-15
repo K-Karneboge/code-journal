@@ -1,6 +1,7 @@
 *:focus {
   outline: solid #562b81;
   outline-width: 2pt;
+  background: #f0f0f0;
 }
 
 input {
@@ -13,11 +14,14 @@ input {
   background-color: #f0f0f0;
 }
 
-.form-head {
+.nav-bar {
   background-color: #562b81;
   color: white;
-  width: 100%;
-  text-align: left;
+  display: flex;
+}
+
+.header-title {
+  margin: 20%;
 }
 
 .labels {
