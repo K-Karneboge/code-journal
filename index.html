@@ -17,8 +17,40 @@
 </head>
 <body>
   <header>
+    <div class="nav-bar">
+      <nav>
+        <div class="header-title column-full"><h4>Code Journal</h4></div>
+      </nav>
+    </div>
   </header>
   <main>
+    <div class="container">
+      <!-- Dont know whther or not the new entry container will be need to be hidden at any point, setting a div and a class for it.-->
+      <div class="newEntryContainer">
+        <div class="row">
+          <h3 class="column-full align-left">New Entry</h3>
+        </div>
+        <form class="inputForm" action="">
+          <div class="row">
+            <div class="column-half">
+              <img class="image-input" src="./images/placeholder-image-square.jpg" alt="New Entry Placeholder">
+            </div>
+            <div class="column-half">
+              <label class="labels" for="titleInput">Title</label><br>
+              <input class="entry-fullwidth" name="titleInput" id="titleInput" type="text" required><br>
+              <label class="labels" for="photoUrl">Photo Url</label><br>
+              <input class="entry-fullwidth photoUrl" id="photoUrl" name="photoUrl" type="text" required><br>
+            </div>
+          </div>
+          <div class="column-full">
+            <label class="labels" for="notesInput">Notes</label><br>
+            <textarea class="entry-fullwidth" name="notesInput" id="notesInput" rows="5"></textarea>
+            <div class="align-right"><input id="newInputSubmit" class="submit-button" type="submit" value="Save"></input></div><br>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- Should check the css with using the column full and half from the layout css -->
   </main>
   <script src="js/data.js"></script>
   <script src="js/main.js"></script>

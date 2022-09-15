@@ -1,0 +1,66 @@
+*:focus {
+  outline: solid #562b81;
+  outline-width: 2pt;
+  background: #f0f0f0;
+}
+
+input {
+  border-radius: 2pt;
+  border-color: #b6b6b6;
+  border-width: thin;
+}
+
+.container {
+  background-color: #f0f0f0;
+}
+
+.nav-bar {
+  background-color: #562b81;
+  color: white;
+  display: flex;
+}
+
+.header-title {
+  margin: 20%;
+}
+
+.labels {
+  font-weight: bold;
+}
+
+.row {
+  justify-content: center;
+  width: 100%;
+  line-height: 1.6;
+}
+
+.image-input {
+  display: flex;
+  width: 100%;
+  max-width: 768px;
+  border: none;
+  border-radius: 4px;
+}
+
+.align-left {
+  text-align: left;
+}
+
+.align-right {
+  text-align: right;
+}
+
+.entry-fullwidth {
+  width: 100%;
+}
+
+.form-entry {
+  display: flex;
+  width: 100%;
+}
+
+.submit-button {
+  background: #562b81;
+  color: white;
+  text-transform: uppercase;
+}
