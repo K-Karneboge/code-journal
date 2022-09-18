@@ -5,6 +5,7 @@ var inputForm = document.querySelector('.inputForm');
 var photoUrl = document.querySelector('[name="photoUrl"]');
 var photoImg = document.querySelector('.image-input');
 var submitForm = document.querySelector('.inputForm');
+
 // Change the image src to value of photoUrl
 // Function for listening to input on the PhotoUrl, possibly ask on how to add regex for input. Need to find what part of the object to set to the new src.
 function urlInput(e) {
@@ -22,6 +23,7 @@ function handleSubmit(e) {
     notes: notesInput.value,
     nextEntryId: data.nextEntryId
   };
+  userEntries.appendChild(createEntry(newInput));
   data.entries.push(newInput);
   data.nextEntryId++;
   photoImg.src = './images/placeholder-image-square.jpg';
@@ -35,6 +37,7 @@ submitForm.addEventListener('submit', handleSubmit);
 // Prepend the new object to the entries in the data model.
 // Reset the image preview's `src' attribute.
 // Reset the form inputs
+
 function createEntry(e) {
   // create a li, create two divs. place both divs within the li
   var entryItem = document.createElement('li');
@@ -66,3 +69,18 @@ function loadUserEntries(e) {
   }
 }
 document.addEventListener('DOMContentLoaded', loadUserEntries);
+
+var newEntryButton = document.querySelector('[name="new-entry"]');
+var newEntryContainer = document.querySelector('.new-entry-container');
+
+function displayNewEntry(e) {
+  if (newEntryContainer.style.display === 'none') {
+    newEntryContainer.style.display = 'block';
+    newEntryButton.textContent = 'Close';
+  } else if (newEntryContainer.style.display === 'block') {
+    newEntryContainer.style.display = 'none';
+    newEntryButton.textContent = 'New';
+  }
+}
+
+newEntryButton.addEventListener('click', displayNewEntry);
