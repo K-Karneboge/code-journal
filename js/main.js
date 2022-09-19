@@ -23,11 +23,13 @@ function handleSubmit(e) {
     notes: notesInput.value,
     nextEntryId: data.nextEntryId
   };
-  userEntries.appendChild(createEntry(newInput));
+  var latestEntry = createEntry(newInput);
+  userEntries.appendChild(latestEntry);
   data.entries.push(newInput);
   data.nextEntryId++;
   photoImg.src = './images/placeholder-image-square.jpg';
   inputForm.reset();
+  latestEntry.scrollIntoView({ behavior: 'smooth' });
 }
 photoUrl.addEventListener('input', urlInput);
 submitForm.addEventListener('submit', handleSubmit);
