@@ -24,13 +24,14 @@ function handleSubmit(e) {
     nextEntryId: data.nextEntryId
   };
   var latestEntry = createEntry(newInput);
-  userEntries.appendChild(latestEntry);
+  userEntries.prepend(latestEntry);
   data.entries.push(newInput);
   data.nextEntryId++;
   photoImg.src = './images/placeholder-image-square.jpg';
   inputForm.reset();
   latestEntry.scrollIntoView({ behavior: 'smooth' });
 }
+
 photoUrl.addEventListener('input', urlInput);
 submitForm.addEventListener('submit', handleSubmit);
 // Put the form's input values into a new object.
@@ -67,20 +68,20 @@ var userEntries = document.querySelector('.entries-ul');
 
 function loadUserEntries(e) {
   for (var i = 0; i < data.entries.length; i++) {
-    userEntries.appendChild(createEntry(data.entries[i]));
+    userEntries.prepend(createEntry(data.entries[i]));
   }
 }
 document.addEventListener('DOMContentLoaded', loadUserEntries);
 
 var newEntryButton = document.querySelector('[name="new-entry"]');
-var newEntryContainer = document.querySelector('.new-entry-container');
+var newEntryContainer = document.querySelector('[id="new-entry-container"]');
 
 function displayNewEntry(e) {
-  if (newEntryContainer.style.display === 'none') {
-    newEntryContainer.style.display = 'block';
+  if (newEntryContainer.className === 'hidden') {
+    newEntryContainer.className = 'new-entry-container';
     newEntryButton.textContent = 'Close';
-  } else if (newEntryContainer.style.display === 'block') {
-    newEntryContainer.style.display = 'none';
+  } else if (newEntryContainer.className === 'new-entry-container') {
+    newEntryContainer.className = 'hidden';
     newEntryButton.textContent = 'New';
   }
 }

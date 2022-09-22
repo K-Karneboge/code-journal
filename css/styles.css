@@ -36,6 +36,10 @@ a:hover {
   background-color: #f0f0f0;
 }
 
+.entry-row {
+  padding-top: 1rem;
+}
+
 .nav-bar {
   background-color: #562b81;
   color: white;
@@ -101,4 +105,8 @@ a:hover {
   background: #562b81;
   color: white;
   text-transform: uppercase;
+}
+
+.hidden {
+  display: none;
 }
