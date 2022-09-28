@@ -29,6 +29,7 @@ function handleSubmit(e) {
   data.nextEntryId++;
   photoImg.src = './images/placeholder-image-square.jpg';
   inputForm.reset();
+  displayEntries();
   latestEntry.scrollIntoView({ behavior: 'smooth' });
 }
 
@@ -74,16 +75,16 @@ function loadUserEntries(e) {
 document.addEventListener('DOMContentLoaded', loadUserEntries);
 
 var newEntryButton = document.querySelector('[name="new-entry"]');
-var newEntryContainer = document.querySelector('[id="new-entry-container"]');
+var newEntryContainer = document.querySelector('[data-view="entry-form"]');
+var entryContainer = document.querySelector('[data-view="entries"]');
 
 function displayNewEntry(e) {
-  if (newEntryContainer.className === 'hidden') {
-    newEntryContainer.className = 'new-entry-container';
-    newEntryButton.textContent = 'Close';
-  } else if (newEntryContainer.className === 'new-entry-container') {
-    newEntryContainer.className = 'hidden';
-    newEntryButton.textContent = 'New';
-  }
+  newEntryContainer.className = 'new-entry-container';
+  entryContainer.className = 'hidden';
+}
+function displayEntries(e) {
+  newEntryContainer.className = 'hidden';
+  entryContainer.className = 'user-entry-container';
 }
 
 newEntryButton.addEventListener('click', displayNewEntry);

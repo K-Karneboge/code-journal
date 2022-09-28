@@ -31,7 +31,7 @@
   <main>
     <div class="container">
       <!-- Dont know whther or not the new entry container will be need to be hidden at any point, setting a div and a class for it.-->
-      <div id="new-entry-container" class="hidden">
+      <div data-view="entry-form" class="hidden">
         <div class="row">
           <h3 class="column-full align-left">New Entry</h3>
         </div>
@@ -54,7 +54,7 @@
           </div>
         </form>
       </div>
-      <div class="user-entry-container" id="entries">
+      <div data-view="entries" class="user-entry-container" id="entries">
         <div class="row entry-row" >
           <div class="column-half">
             <h3>Entries</h3>
