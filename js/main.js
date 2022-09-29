@@ -68,9 +68,11 @@ var userEntries = document.querySelector('.entries-ul');
 
 function onLoad(e) {
   for (var i = 0; i < data.entries.length; i++) {
-    userEntries.append(createEntry(data.entries[i]));
+    userEntries.appendChild(createEntry(data.entries[i]));
   }
-  view(data.view);
+  if (data.view !== null) {
+    view(data.view);
+  }
 }
 document.addEventListener('DOMContentLoaded', onLoad);
 
