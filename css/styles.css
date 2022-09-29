@@ -1,17 +1,43 @@
 *:focus {
   outline: solid #562b81;
   outline-width: 2pt;
-  background: #f0f0f0;
 }
 
-input {
+input,
+button {
   border-radius: 2pt;
   border-color: #b6b6b6;
   border-width: thin;
 }
 
+li {
+  padding: 10px;
+  margin: 10px;
+}
+
+.nav-links {
+  list-style-type: none;
+  margin: 0;
+  padding: 10px;
+  display: inline-block;
+  margin-left: 10px;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover {
+  font-weight: bold;
+}
+
 .container {
   background-color: #f0f0f0;
+}
+
+.entry-row {
+  padding-top: 1rem;
 }
 
 .nav-bar {
@@ -24,6 +50,10 @@ input {
   margin: 20%;
 }
 
+.app-title {
+  display: inline;
+}
+
 .labels {
   font-weight: bold;
 }
@@ -34,10 +64,22 @@ input {
   line-height: 1.6;
 }
 
+.entries-ul {
+  list-style: none;
+  padding: 0;
+}
+
+.entries-image {
+  width: 50%;
+}
+
+.entry-text {
+  font-size: calc(11px + 0.75vw);
+}
+
 .image-input {
   display: flex;
   width: 100%;
-  max-width: 768px;
   border: none;
   border-radius: 4px;
 }
@@ -59,8 +101,12 @@ input {
   width: 100%;
 }
 
-.submit-button {
+.button {
   background: #562b81;
   color: white;
   text-transform: uppercase;
+}
+
+.hidden {
+  display: none;
 }
