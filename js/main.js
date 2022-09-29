@@ -66,13 +66,13 @@ function createEntry(e) {
 }
 var userEntries = document.querySelector('.entries-ul');
 
-function loadUserEntries(e) {
+function onLoad(e) {
   for (var i = 0; i < data.entries.length; i++) {
     userEntries.append(createEntry(data.entries[i]));
   }
-  view('entries');
+  view(data.view);
 }
-document.addEventListener('DOMContentLoaded', loadUserEntries);
+document.addEventListener('DOMContentLoaded', onLoad);
 
 function view(property) {
   var allViews = document.querySelectorAll('[data-view]');
@@ -80,6 +80,7 @@ function view(property) {
     allViews[i].className = 'hidden';
   }
   document.querySelector('[data-view="' + property + '"]').className = property;
+  data.view = property;
 }
 
 function viewNewEntry(a) {
