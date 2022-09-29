@@ -25,12 +25,11 @@ function handleSubmit(e) {
   };
   var latestEntry = createEntry(newInput);
   userEntries.prepend(latestEntry);
-  data.entries.push(newInput);
+  data.entries.unshift(newInput);
   data.nextEntryId++;
   photoImg.src = './images/placeholder-image-square.jpg';
   inputForm.reset();
-  displayEntries();
-  latestEntry.scrollIntoView({ behavior: 'smooth' });
+  view('entries');
 }
 
 photoUrl.addEventListener('input', urlInput);
@@ -69,22 +68,23 @@ var userEntries = document.querySelector('.entries-ul');
 
 function loadUserEntries(e) {
   for (var i = 0; i < data.entries.length; i++) {
-    userEntries.prepend(createEntry(data.entries[i]));
+    userEntries.append(createEntry(data.entries[i]));
   }
+  view('entries');
 }
 document.addEventListener('DOMContentLoaded', loadUserEntries);
 
+function view(property) {
+  var allViews = document.querySelectorAll('[data-view]');
+  for (var i = 0; i < allViews.length; i++) {
+    allViews[i].className = 'hidden';
+  }
+  document.querySelector('[data-view="' + property + '"]').className = property;
+}
+
+function viewNewEntry(a) {
+  view('entry-form');
+}
+
 var newEntryButton = document.querySelector('[name="new-entry"]');
-var newEntryContainer = document.querySelector('[data-view="entry-form"]');
-var entryContainer = document.querySelector('[data-view="entries"]');
-
-function displayNewEntry(e) {
-  newEntryContainer.className = 'new-entry-container';
-  entryContainer.className = 'hidden';
-}
-function displayEntries(e) {
-  newEntryContainer.className = 'hidden';
-  entryContainer.className = 'user-entry-container';
-}
-
-newEntryButton.addEventListener('click', displayNewEntry);
+newEntryButton.addEventListener('click', viewNewEntry);
