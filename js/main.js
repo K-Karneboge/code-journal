@@ -15,6 +15,7 @@ function urlInput(e) {
     photoImg.src = './images/placeholder-image-square.jpg';
   }
 }
+
 function handleSubmit(e) {
   e.preventDefault();
   var newInput = {
@@ -23,10 +24,13 @@ function handleSubmit(e) {
     notes: notesInput.value,
     nextEntryId: data.nextEntryId
   };
+  // if the submission is new
   var latestEntry = createEntry(newInput);
   userEntries.prepend(latestEntry);
   data.entries.unshift(newInput);
   data.nextEntryId++;
+  // if the submission is an edit.
+
   photoImg.src = './images/placeholder-image-square.jpg';
   inputForm.reset();
   view('entries');
@@ -44,6 +48,7 @@ submitForm.addEventListener('submit', handleSubmit);
 function createEntry(e) {
   // create a li, create two divs. place both divs within the li
   var entryItem = document.createElement('li');
+  entryItem.setAttribute('data-entry-id', data.entries.findIndex(object => { return object.title === e.title; }));
   entryItem.className = 'row entry-li';
   var entryImgDiv = document.createElement('div');
   var entryImg = document.createElement('img');
@@ -54,6 +59,10 @@ function createEntry(e) {
   var entryTextDiv = document.createElement('div');
   var entryTextTitle = document.createElement('h4');
   var entryTextNotes = document.createElement('p');
+  var editEntryIcon = document.createElement('i');
+  editEntryIcon.className = 'fa-solid fa-pen-to-square';
+  // data entry id of the entry icon and of the li itself are both set to the index of the data.entries object that they were created from.
+  editEntryIcon.setAttribute('data-entry-id', data.entries.findIndex(object => { return object.title === e.title; }));
   entryTextNotes.textContent = e.notes;
   entryTextTitle.textContent = e.title;
   entryTextDiv.className = 'column-half entry-text';
@@ -61,9 +70,33 @@ function createEntry(e) {
   entryItem.appendChild(entryTextDiv);
   entryImgDiv.appendChild(entryImg);
   entryTextDiv.appendChild(entryTextTitle);
+  entryTextTitle.appendChild(editEntryIcon);
   entryTextDiv.appendChild(entryTextNotes);
   return entryItem;
 }
+
+var entriesView = document.querySelector('[data-view="entries"]');
+
+entriesView.addEventListener('click', editEntry);
+
+function editEntry(e) {
+  if (e.target.matches('i')) {
+    data.editing = data.entries[e.target.getAttribute('data-entry-id')];
+    viewNewEntry();
+    populateEdit();
+  }
+}
+function populateEdit(e) {
+  titleInput.value = data.editing.title;
+  photoUrl.value = data.editing.photoUrl;
+  notesInput.value = data.editing.notes;
+}
+
+// title: titleInput.value,
+//   photoUrl: photoUrl.value,
+//     notes: notesInput.value,
+//       nextEntryId: data.nextEntryId
+
 var userEntries = document.querySelector('.entries-ul');
 
 function onLoad(e) {

@@ -28,10 +28,6 @@ a {
   text-decoration: none;
 }
 
-a:hover {
-  font-weight: bold;
-}
-
 .container {
   background-color: #f0f0f0;
 }
