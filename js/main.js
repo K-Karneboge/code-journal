@@ -89,6 +89,7 @@ function editEntry(e) {
   if (e.target.matches('i')) {
     data.editing = data.entries[e.target.getAttribute('data-entry-id')];
     viewNewEntry();
+    document.querySelector('[id="entry-title"]').textContent = 'Edit Entry';
     populateEdit();
   }
 }
@@ -122,6 +123,7 @@ function view(property) {
 
 function viewNewEntry(a) {
   view('entry-form');
+  document.querySelector('[id="entry-title"]').textContent = 'New Entry';
 }
 
 var newEntryButton = document.querySelector('[name="new-entry"]');
