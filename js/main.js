@@ -6,6 +6,8 @@ var photoUrl = document.querySelector('[name="photoUrl"]');
 var photoImg = document.querySelector('.image-input');
 var submitForm = document.querySelector('.inputForm');
 
+var entriesView = document.querySelector('[data-view="entries"]');
+
 // Change the image src to value of photoUrl
 // Function for listening to input on the PhotoUrl, possibly ask on how to add regex for input. Need to find what part of the object to set to the new src.
 function urlInput(e) {
@@ -21,18 +23,24 @@ function handleSubmit(e) {
   var newInput = {
     title: titleInput.value,
     photoUrl: photoUrl.value,
-    notes: notesInput.value,
-    nextEntryId: data.nextEntryId
+    notes: notesInput.value
   };
   // if the submission is new
-  var latestEntry = createEntry(newInput);
-  userEntries.prepend(latestEntry);
-  data.entries.unshift(newInput);
-  data.nextEntryId++;
-  // if the submission is an edit.
-
+  if (data.editing === null) {
+    newInput.nextEntryId = data.nextEntryId;
+    data.entries.unshift(newInput);
+    var latestEntry = createEntry(data.entries[0]);
+    userEntries.prepend(latestEntry);
+    data.nextEntryId++;
+  } else if (data.editing !== null) {
+    newInput.nextEntryId = data.editing.nextEntryId;
+    var newInputId = data.entries.findIndex(object => { return object.nextEntryId === newInput.nextEntryId; });
+    data.entries.splice(newInputId, 1, newInput);
+    document.querySelector('[data-entry-id="' + newInputId + '"]').replaceWith(createEntry(data.entries[newInputId]));
+  }
   photoImg.src = './images/placeholder-image-square.jpg';
   inputForm.reset();
+  data.editing = null;
   view('entries');
 }
 
@@ -75,8 +83,6 @@ function createEntry(e) {
   return entryItem;
 }
 
-var entriesView = document.querySelector('[data-view="entries"]');
-
 entriesView.addEventListener('click', editEntry);
 
 function editEntry(e) {
@@ -86,16 +92,12 @@ function editEntry(e) {
     populateEdit();
   }
 }
+
 function populateEdit(e) {
   titleInput.value = data.editing.title;
   photoUrl.value = data.editing.photoUrl;
   notesInput.value = data.editing.notes;
 }
-
-// title: titleInput.value,
-//   photoUrl: photoUrl.value,
-//     notes: notesInput.value,
-//       nextEntryId: data.nextEntryId
 
 var userEntries = document.querySelector('.entries-ul');
 
