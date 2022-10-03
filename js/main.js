@@ -6,6 +6,8 @@ var photoUrl = document.querySelector('[name="photoUrl"]');
 var photoImg = document.querySelector('.image-input');
 var submitForm = document.querySelector('.inputForm');
 
+var entriesView = document.querySelector('[data-view="entries"]');
+
 // Change the image src to value of photoUrl
 // Function for listening to input on the PhotoUrl, possibly ask on how to add regex for input. Need to find what part of the object to set to the new src.
 function urlInput(e) {
@@ -15,20 +17,30 @@ function urlInput(e) {
     photoImg.src = './images/placeholder-image-square.jpg';
   }
 }
+
 function handleSubmit(e) {
   e.preventDefault();
   var newInput = {
     title: titleInput.value,
     photoUrl: photoUrl.value,
-    notes: notesInput.value,
-    nextEntryId: data.nextEntryId
+    notes: notesInput.value
   };
-  var latestEntry = createEntry(newInput);
-  userEntries.prepend(latestEntry);
-  data.entries.unshift(newInput);
-  data.nextEntryId++;
+  // if the submission is new
+  if (data.editing === null) {
+    newInput.nextEntryId = data.nextEntryId;
+    data.entries.unshift(newInput);
+    var latestEntry = createEntry(data.entries[0]);
+    userEntries.prepend(latestEntry);
+    data.nextEntryId++;
+  } else if (data.editing !== null) {
+    newInput.nextEntryId = data.editing.nextEntryId;
+    var newInputId = data.entries.findIndex(object => { return object.nextEntryId === newInput.nextEntryId; });
+    data.entries.splice(newInputId, 1, newInput);
+    document.querySelector('[data-entry-id="' + newInputId + '"]').replaceWith(createEntry(data.entries[newInputId]));
+  }
   photoImg.src = './images/placeholder-image-square.jpg';
   inputForm.reset();
+  data.editing = null;
   view('entries');
 }
 
@@ -44,6 +56,7 @@ submitForm.addEventListener('submit', handleSubmit);
 function createEntry(e) {
   // create a li, create two divs. place both divs within the li
   var entryItem = document.createElement('li');
+  entryItem.setAttribute('data-entry-id', data.entries.findIndex(object => { return object.nextEntryId === e.nextEntryId; }));
   entryItem.className = 'row entry-li';
   var entryImgDiv = document.createElement('div');
   var entryImg = document.createElement('img');
@@ -54,6 +67,10 @@ function createEntry(e) {
   var entryTextDiv = document.createElement('div');
   var entryTextTitle = document.createElement('h4');
   var entryTextNotes = document.createElement('p');
+  var editEntryIcon = document.createElement('i');
+  editEntryIcon.className = 'fa-solid fa-pen-to-square';
+  // data entry id of the entry icon and of the li itself are both set to the index of the data.entries object that they were created from.
+  editEntryIcon.setAttribute('data-entry-id', data.entries.findIndex(object => { return object.nextEntryId === e.nextEntryId; }));
   entryTextNotes.textContent = e.notes;
   entryTextTitle.textContent = e.title;
   entryTextDiv.className = 'column-half entry-text';
@@ -61,9 +78,28 @@ function createEntry(e) {
   entryItem.appendChild(entryTextDiv);
   entryImgDiv.appendChild(entryImg);
   entryTextDiv.appendChild(entryTextTitle);
+  entryTextTitle.appendChild(editEntryIcon);
   entryTextDiv.appendChild(entryTextNotes);
   return entryItem;
 }
+
+entriesView.addEventListener('click', editEntry);
+
+function editEntry(e) {
+  if (e.target.matches('i')) {
+    data.editing = data.entries[e.target.getAttribute('data-entry-id')];
+    viewNewEntry();
+    document.querySelector('[id="entry-title"]').textContent = 'Edit Entry';
+    populateEdit();
+  }
+}
+
+function populateEdit(e) {
+  titleInput.value = data.editing.title;
+  photoUrl.value = data.editing.photoUrl;
+  notesInput.value = data.editing.notes;
+}
+
 var userEntries = document.querySelector('.entries-ul');
 
 function onLoad(e) {
@@ -83,10 +119,14 @@ function view(property) {
   }
   document.querySelector('[data-view="' + property + '"]').className = property;
   data.view = property;
+  if (data.editing !== null) {
+    document.querySelector('[id="entry-title"]').textContent = 'Edit Entry';
+  }
 }
 
 function viewNewEntry(a) {
   view('entry-form');
+  document.querySelector('[id="entry-title"]').textContent = 'New Entry';
 }
 
 var newEntryButton = document.querySelector('[name="new-entry"]');
