@@ -56,7 +56,7 @@ submitForm.addEventListener('submit', handleSubmit);
 function createEntry(e) {
   // create a li, create two divs. place both divs within the li
   var entryItem = document.createElement('li');
-  entryItem.setAttribute('data-entry-id', data.entries.findIndex(object => { return object.title === e.title; }));
+  entryItem.setAttribute('data-entry-id', data.entries.findIndex(object => { return object.nextEntryId === e.nextEntryId; }));
   entryItem.className = 'row entry-li';
   var entryImgDiv = document.createElement('div');
   var entryImg = document.createElement('img');
@@ -70,7 +70,7 @@ function createEntry(e) {
   var editEntryIcon = document.createElement('i');
   editEntryIcon.className = 'fa-solid fa-pen-to-square';
   // data entry id of the entry icon and of the li itself are both set to the index of the data.entries object that they were created from.
-  editEntryIcon.setAttribute('data-entry-id', data.entries.findIndex(object => { return object.title === e.title; }));
+  editEntryIcon.setAttribute('data-entry-id', data.entries.findIndex(object => { return object.nextEntryId === e.nextEntryId; }));
   entryTextNotes.textContent = e.notes;
   entryTextTitle.textContent = e.title;
   entryTextDiv.className = 'column-half entry-text';
@@ -119,6 +119,9 @@ function view(property) {
   }
   document.querySelector('[data-view="' + property + '"]').className = property;
   data.view = property;
+  if (data.editing !== null) {
+    document.querySelector('[id="entry-title"]').textContent = 'Edit Entry';
+  }
 }
 
 function viewNewEntry(a) {
